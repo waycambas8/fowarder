@@ -8,7 +8,7 @@ class FowarderController extends Controller
 {   
 
     public function __construct(){
-        $this->url = "http://103.206.253.69/xendit/api/callback";
+        $this->url = env("URL_HIT");
         $this->header = getallheaders();
     }
 
