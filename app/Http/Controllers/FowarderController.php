@@ -13,7 +13,15 @@ class FowarderController extends Controller
     }
 
     public function callback_fowarder(Request $req){
-        $token = (!isset($this->header['X-Callback-Token']))?$this->header['X-CALLBACK-TOKEN']:$this->header['X-Callback-Token'];
+        
+        if(isset($this->header['X-Callback-Token'])){
+            $token = $this->header['X-Callback-Token'];
+        }elseif(isset($this->header['X-CALLBACK-TOKEN'])){
+            $token = $this->header['X-CALLBACK-TOKEN'];
+        }else{ 
+            $token = $this->header['x-callback-token'];
+        }
+
         $data = $req->toArray();
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -35,6 +43,6 @@ class FowarderController extends Controller
         curl_close($curl);
         $res['pesan'] = $response;
 
-        print_r($response);
+        return $response;
     }
 }
